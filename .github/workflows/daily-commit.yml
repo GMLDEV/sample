@@ -1,10 +1,9 @@
-#scheduled workflow but edited now
 name: Daily Commit Bot
 
 on:
   schedule:
-    # Runs every day at 04:30 UTC (adjust if needed)
-    - cron: '30 4 * * *'
+    - cron: '17 13 * * *'  # Runs at 6:47 PM IST every day
+  workflow_dispatch:  # Optional: allows you to run it manually
 
 jobs:
   daily-commit:
@@ -22,3 +21,4 @@ jobs:
           git add last-run.txt
           git commit -m "Daily update: $(date -u)"
           git push
+
