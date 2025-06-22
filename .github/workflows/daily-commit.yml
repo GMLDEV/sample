@@ -2,8 +2,8 @@ name: Daily Commit Bot
 
 on:
   schedule:
-    - cron: '17 13 * * *'  # 6:47 PM IST
-  workflow_dispatch:
+    - cron: '17 13 * * *'  # 6:47 PM IST daily
+  workflow_dispatch:  # allow manual trigger too
 
 jobs:
   daily-commit:
@@ -13,9 +13,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          persist-credentials: false  # Needed for manual token setup
+          persist-credentials: false  # We will manually set credentials
 
-      - name: Set up auth for pushing
+      - name: Set up push permissions with GITHUB_TOKEN
         run: |
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
 
@@ -25,5 +25,5 @@ jobs:
           git config user.name "GitHub Action Bot"
           git config user.email "bot@users.noreply.github.com"
           git add last-run.txt
-          git commit -m "Daily update: $(date -u)" || echo "No changes to commit"
+          git commit -m "Daily update: $(date -u)" || echo "Nothing to commit"
           git push
